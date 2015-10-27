@@ -8,10 +8,12 @@ template "/etc/zabbix/zabbix_agentd.conf" do
   source "./templates/etc/zabbix/zabbix_agentd.conf.erb"
 end
 
-template "/etc/zabbix/zabbix_agentd.d/userparameter_netstat.conf" do
-  owner "root"
-  group "root"
-  source "./templates/etc/zabbix/zabbix_agentd.d/userparameter_netstat.conf.erb"
+node[:zabbix][:userparameters].each do |f|
+  template "/etc/zabbix/zabbix_agentd.d/#{f}" do
+    owner "root"
+    group "root"
+    source "/zabbix/templates/etc/zabbix/zabbix_agentd.d/#{f}.erb"
+  end
 end
 
 service 'zabbix-agent' do
