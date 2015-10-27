@@ -1,0 +1,18 @@
+PidFile=/var/run/zabbix/zabbix_agentd.pid
+LogFile=/var/log/zabbix/zabbix_agentd.log
+LogFileSize=0
+EnableRemoteCommands=1
+
+Server=<%= node[:zabbix][:server] %>
+ListenPort=<%= node[:zabbix][:port] %>
+ServerActive=<%= node[:zabbix][:server] %>
+
+<% if node[:zabbix][:hostname] %>
+Hostname=<%= node[:zabbix][:hostname] %>
+<% else %>
+HostnameItem=system.hostname
+HostMetadata=<%= node[:zabbix][:host_metadata] %>
+<% end %>
+
+AllowRoot=1
+Include=/etc/zabbix/zabbix_agentd.d/
