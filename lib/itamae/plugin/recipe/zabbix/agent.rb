@@ -14,10 +14,10 @@ template "/etc/zabbix/zabbix_agentd.d/userparameter_netstat.conf" do
   source "./templates/etc/zabbix/zabbix_agentd.d/userparameter_netstat.conf.erb"
 end
 
-service "zabbix-agent" do
-  subscribes :restart, "template[/etc/zabbix/zabbix_agentd.conf]"
-end
-
 service 'zabbix-agent' do
   action [:enable, :start]
+end
+
+service "zabbix-agent" do
+  subscribes :restart, "template[/etc/zabbix/zabbix_agentd.conf]"
 end
