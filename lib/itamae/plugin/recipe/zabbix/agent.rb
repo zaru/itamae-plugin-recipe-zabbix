@@ -8,14 +8,6 @@ template "/etc/zabbix/zabbix_agentd.conf" do
   source "./templates/etc/zabbix/zabbix_agentd.conf.erb"
 end
 
-node[:zabbix][:userparameters].each do |f|
-  template "/etc/zabbix/zabbix_agentd.d/#{f}" do
-    owner "root"
-    group "root"
-    source "/zabbix/templates/etc/zabbix/zabbix_agentd.d/#{f}.erb"
-  end
-end
-
 service 'zabbix-agent' do
   action [:enable, :start]
 end
