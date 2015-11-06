@@ -15,16 +15,3 @@ cpu = node[:zabbix][:platform_cpu] if node[:zabbix][:platform_cpu]
 package "http://repo.zabbix.com/zabbix/#{zabbix_version}/#{platform}/#{platform_version}/#{cpu}/zabbix-release-#{zabbix_version}-1.el#{platform_version}.noarch.rpm" do
   not_if "rpm -q zabbix-release"
 end
-
-define :zabbix_userparameters, path: "" do
-  path = params[:path]
-
-  node[:zabbix][:userparameters].each do |f|
-    template "/etc/zabbix/zabbix_agentd.d/#{f}" do
-      owner "root"
-      group "root"
-      source  path + "/#{f}"
-    end
-  end
-
-end
