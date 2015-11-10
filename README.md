@@ -41,6 +41,7 @@ zabbix:
 
 ```ruby
 include_recipe "zabbix"
+include_recipe "zabbix::agent"
 
 zabbix_userparameters "all" do
   path File.expand_path(File.dirname(__FILE__)) + "/zabbix/templates/etc/zabbix/zabbix_agentd.d/"
