@@ -1,5 +1,9 @@
 PidFile=/var/run/zabbix/zabbix_agentd.pid
+<% if node[:platform] == 'ubuntu' %>
+LogFile=/var/log/zabbix-agent/zabbix_agentd.log
+<% else %>
 LogFile=/var/log/zabbix/zabbix_agentd.log
+<% end %>
 LogFileSize=0
 EnableRemoteCommands=1
 
@@ -15,4 +19,8 @@ HostMetadata=<%= node[:zabbix][:host_metadata] %>
 <% end %>
 
 AllowRoot=1
+<% if node[:platform] == 'ubuntu' %>
+Include=/etc/zabbix/zabbix_agentd.conf.d/
+<% else %>
 Include=/etc/zabbix/zabbix_agentd.d/
+<% end %>

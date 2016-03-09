@@ -12,6 +12,18 @@ platform_version = node[:zabbix][:platform_version] if node[:zabbix][:platform_v
 cpu = "x86_64" # or i386
 cpu = node[:zabbix][:platform_cpu] if node[:zabbix][:platform_cpu]
 
-package "http://repo.zabbix.com/zabbix/#{zabbix_version}/#{platform}/#{platform_version}/#{cpu}/zabbix-release-#{zabbix_version}-1.el#{platform_version}.noarch.rpm" do
-  not_if "rpm -q zabbix-release"
+case node[:platform]
+  when "ubuntu"
+    codename = 'trusty'
+    codename = node[:zabbix][:codename] if node[:zabbix][:codename]
+    execute "add zabbix agent pkg" do
+      user "root"
+      command "wget http://repo.zabbix.com/zabbix/#{zabbix_version}/ubuntu/pool/main/z/zabbix-release/zabbix-release_#{zabbix_version}-1+#{codename}_all.deb"
+      command "dpkg -i zabbix-release_2.2-1+trusty_all.deb"
+      command "apt-get update"
+    end
+  else
+    package "http://repo.zabbix.com/zabbix/#{zabbix_version}/#{platform}/#{platform_version}/#{cpu}/zabbix-release-#{zabbix_version}-1.el#{platform_version}.noarch.rpm" do
+      not_if "rpm -q zabbix-release"
+    end
 end
