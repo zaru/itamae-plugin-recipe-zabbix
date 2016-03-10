@@ -19,7 +19,7 @@ case node[:platform]
     execute "add zabbix agent pkg" do
       user "root"
       command "wget http://repo.zabbix.com/zabbix/#{zabbix_version}/ubuntu/pool/main/z/zabbix-release/zabbix-release_#{zabbix_version}-1+#{codename}_all.deb"
-      command "dpkg -i zabbix-release_2.2-1+trusty_all.deb"
+      command "dpkg -i zabbix-release_#{zabbix_version}-1+#{codename}_all.deb"
       command "apt-get update"
     end
   else
